@@ -8,9 +8,10 @@
 <body>
   <a-scene>
     <!-- Rig de la cámara para movimiento con el joystick en VR -->
-    <a-entity id="cameraRig" position="0 1 0" movement-controls="speed: 1">
       <!-- Cámara dentro del rig -->
-      <a-camera position="0 0 0" look-controls></a-camera>
+      <a-entity id="cameraRig" position="0 1.6 0" movement-controls="speed: 2; constrainToNavMesh: true">
+
+      <a-camera wasd-controls-enabled="false" position="0 0 0" look-controls></a-camera>
 
       <!-- Controlador de la mano derecha con raycaster y componente "grabber" -->
       <a-entity id="mano-derecha" hand-controls="hand: right"
