@@ -5,14 +5,36 @@
   <title>Mini Ciudad en A-Frame</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3">
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script>
+    AFRAME.registerComponent('move-on-click', {
+      init: function () {
+        // Este código se ejecuta cuando haces clic sobre el objeto
+        this.el.addEventListener('click', (evt) => {
+          console.log("Clic detectado en el objeto!");
+
+          // Obtener la posición de la cámara (o cursor)
+          const camera = document.querySelector('a-camera');
+          const cameraPosition = camera.getAttribute('position');
+
+          // Mover el objeto a la posición de la cámara
+          this.el.setAttribute('position', {
+            x: cameraPosition.x,
+            y: cameraPosition.y,
+            z: cameraPosition.z - 3  // Puedes ajustar la distancia
+          });
+        });
+      }
+    });
+  </script>
 </head>
+
 <body>
   <a-scene>
-    <!-- Cámara con controles WASD y vuelo -->
-    <a-entity id="cameraRig" position="0 10 20">
-      <a-camera wasd-controls="acceleration: 20; fly: true" look-controls="pointerLockEnabled: true" 
-                position="0 2 0" fly-controls="enabled: true"></a-camera>
-    </a-entity>
+    <!-- Cámara con raycaster configurado correctamente para detectar objetos con clase 'draggable' -->
+    <a-camera wasd-controls="acceleration: 50; fly: true" position="0 2 0" raycaster="objects: .draggable" look-controls="pointerLockEnabled: true">
+      <!-- El cursor debería estar aquí -->
+      <a-cursor color="#FF0000" raycaster="objects: .draggable" fuse="false"></a-cursor>
+    </a-camera>
 
     <!-- Suelo de la ciudad -->
     <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#7BC8A4"></a-plane>
@@ -23,20 +45,8 @@
     <a-box position="-5 6 -20" depth="6" height="12" width="6" color="#FFC65D"></a-box>
     <a-box position="10 3 -25" depth="4" height="6" width="4" color="#24CAFF"></a-box>
 
-    <!-- Más edificios en diferentes colores -->
-    <a-box position="-10 3 -5" depth="3" height="6" width="3" color="#FF8C00"></a-box>
-    <a-box position="-15 5 -15" depth="7" height="10" width="7" color="#FFD700"></a-box>
-    <a-box position="15 2 -8" depth="4" height="4" width="4" color="#ADFF2F"></a-box>
-
-    <!-- Calles -->
-    <a-box position="0 0.1 -10" depth="40" height="0.2" width="2" color="#333333"></a-box>
-    <a-box position="5 0.1 -15" depth="2" height="0.2" width="20" color="#333333"></a-box>
-
-    <!-- Elementos adicionales (árboles) -->
-    <a-cylinder position="3 1 -8" radius="0.5" height="2" color="#8B4513"></a-cylinder>
-    <a-sphere position="3 2.5 -8" radius="1" color="#228B22"></a-sphere>
-    <a-cylinder position="-3 1 -12" radius="0.5" height="2" color="#8B4513"></a-cylinder>
-    <a-sphere position="-3 2.5 -12" radius="1" color="#228B22"></a-sphere>
+    <!-- Objeto que se puede mover -->
+    <a-box id="movableObject" position="0 1 -5" color="blue" move-on-click="true" class="draggable"></a-box>
 
     <!-- Cielo -->
     <a-sky color="#87CEEB"></a-sky>
