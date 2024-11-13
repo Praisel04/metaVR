@@ -1,70 +1,49 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Mandos VR</title>
-        <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-        <script src = "https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+        <title>Prueba agarres y arrastre</title>
+        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+        <script src = "https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
         <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
 
     </head>
     <body>
         <a-scene>
 
-            <a-assets>
-                <a-mixin id="progressivecontrolsgazedefault"
-                    position="0 0 -0.5" raycaster = "objects: .UIbutton"
-                    cursor = "fuse: true; fuseTimeout: 1000"
-                    geometry="primitive: sphere; radius: 0.0025"
-                    material="color: #999999; shader: flat"
-                    super-hands="colliderEvent: raycaster-intersection;
-                                 colliderEventProperty: els;
-                                 colliderEndEvent: raycaster-intersection-cleared;
-                                 colliderEndEventProperty: el">
-                </a-mixin>
-            
-                <a-mixin id="progressivecontrolspointdefault"
-                    line ="color: FF00FF" raycaster="showLine: true; objects: .UIbutton"
-                    super-hands="colliderEvent: raycaster-intersection;
-                                 colliderEventProperty: els;
-                                 colliderEndEvent: raycaster-intersection-cleared;
-                                 colliderEndEventProperty: el">
-                </a-mixin>
-            </a-assets>
-            
             
 
+        <a-entity progressive-controls></a-entity>
 
-            <a-entity progressive-controls></a-entity>
-        
-            <!-- Main Screen -->
-            <a-box id="screen" color="#212121" position="0 2.75 -9" scale="8 4 0.1" hoverable
-            event-set__rescol = "_event: click; _target: #screen; color: #212121"></a-box>
-        
-            <!-- Left Button -->
-             <!-- Hover para poner color al boton al mmirarlo y click para cambiar color de screen -->
-            <a-box color="#212121" position="-2.25 0 -9" scale="2 1 0.1" hoverable
-                class="UIbutton"
-                event-set__enter ="_event: hover-start; color:#AA0000"
-                event-set__leave ="_event: hover-end; color:#212121"
-                event-set__tarcol =" _event: click; _target: #screen; color: #AA0000"></a-box>
-        
-            <!-- Center Button -->
-            <a-box color="#212121" position="0 0 -9" scale="2 1 0.1" hoverable
-            class="UIbutton"
-            event-set__enter ="_event: hover-start; color:#FFAA00"
-            event-set__leave ="_event: hover-end; color:#212121"
-            event-set__tarcol =" _event: click; _target: #screen; color: #FFAA00"></a-box>
-        
-            <!-- Right Button -->
-            <a-box color="#212121" position="2.25 0 -9" scale="2 1 0.1" hoverable
-            class="UIbutton"
-            event-set__enter ="_event: hover-start; color:#00AAFF"
-            event-set__leave ="_event: hover-end; color:#212121"
-            event-set__tarcol =" _event: click; _target: #screen; color: #00AAFF"></a-box>
-        
-            <!-- Sky -->
-            <a-sky></a-sky>
+        <!-- mouse down y mouse up -->
+        <a-box color = #AA0000 position = "-1.5 0 -7 " clickable
+            event-set__start = "_event: grab-start; _target: #verde; material.color: #AA0000"
+            event-set__end = "_event: grab-end; _target: #verde; material.color: #00AA00">
+        </a-box>
+
+        <a-box id = "verde" 
+            color = #00AA00 position = "-1.5 3 -7" grabbable
+            
+            event-set__start = "_event: grab-start; _target: #blue; material.color: #00AA00"
+            event-set__end = "_event: grab-end; _target: #blue; material.color: #00AAFF">
+
+        </a-box>
+
+        <a-box color = #FFAA00 position = "1.5 3 -7" draggable 
+            event-set__drag = "_event: drag-drop; _target: #blue; material.color: #FFAA00">
+
+
+        </a-box>
+
+        <a-box id = "blue" 
+            color = #00AAFF position = "1.5 0 -7" droppable >
+
+        </a-box>
+
+        <a-sphere position = "0 0 0" color = "black" grabbable></a-sphere>
+
+       
+
+            
         </a-scene>
-        
     </body>
 </html>
