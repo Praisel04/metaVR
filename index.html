@@ -1,49 +1,72 @@
+<!-- Este codigo es una prueba de agarres y arrastre usando las librerias de:
+        Aframe: Desarrollo 3D
+        Aframe-event-set: Manejo de eventos
+        Aframe-extras: Extras
+        Super-hands: Nos permite usar de forma sencilla acciones como Click, Drag, Drop o Grab
+    El codigo aun está en desarrollo, la idea es poder usar la Realidad Virtual con este codigo para ser capaz de mover objetos usando
+    el visor y controladores de Meta Quest 2.
+
+    DATOS IMPORTARNTES:
+        -El uso de las versiones deben ser las establecidas, para evitar fallos.
+        -El codigo aun sigue en desarrollo, cualquier aportacion o sugerencia es bienvenida.
+    
+    Codigo realizado por Iván Seco Martín
+    Comenzado: 12/11/2024-->
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Prueba agarres y arrastre</title>
-        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-        <script src = "https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
-        <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
 
-    </head>
-    <body>
-        <a-scene>
+<head>
+    <title>Prueba agarres y arrastre</title>
+    <!-- HAY QUE USAR ESTAS VERSIONES SINO PETA -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
 
-            
+</head>
 
-        <a-entity progressive-controls></a-entity>
+<body>
+    <a-scene>
+        <!-- Usamos el collider para detectar la interseccion con el objeto, le marcamos que usaremos la mano derecha para interactuar -->
+        <a-entity sphere-collider="objects: a-box; " super-hands id="rightHand"
+            hand-controls="hand: right; handModeStyle color: #ffcccc"></a-entity>
+
+            <!-- Añadimos el cursor para la camara -->
+        <a-camera>
+            <a-cursor></a-cursor>
+        </a-camera>
+
+
 
         <!-- mouse down y mouse up -->
-        <a-box color = #AA0000 position = "-1.5 0 -7 " clickable
-            event-set__start = "_event: grab-start; _target: #verde; material.color: #AA0000"
-            event-set__end = "_event: grab-end; _target: #verde; material.color: #00AA00">
+        <a-box color=#AA0000 position="-1.5 0 -3 " clickable
+            event-set__start="_event: grab-start; _target: #verde; material.color: #AA0000"
+            event-set__end="_event: grab-end; _target: #verde; material.color: #00AA00">
         </a-box>
 
-        <a-box id = "verde" 
-            color = #00AA00 position = "-1.5 3 -7" grabbable
-            
-            event-set__start = "_event: grab-start; _target: #blue; material.color: #00AA00"
-            event-set__end = "_event: grab-end; _target: #blue; material.color: #00AAFF">
-
-        </a-box>
-
-        <a-box color = #FFAA00 position = "1.5 3 -7" draggable 
-            event-set__drag = "_event: drag-drop; _target: #blue; material.color: #FFAA00">
-
+        <a-box id="verde" color=#00AA00 position="-1.5 3 -3" grabbable
+            event-set__start="_event: grab-start; _target: #blue; material.color: #00AA00"
+            event-set__end="_event: grab-end; _target: #blue; material.color: #00AAFF">
 
         </a-box>
 
-        <a-box id = "blue" 
-            color = #00AAFF position = "1.5 0 -7" droppable >
+        <a-box color=#FFAA00 position="1.5 3 -3" draggable
+            event-set__drag="_event: drag-drop; _target: #blue; material.color: #FFAA00">
+
 
         </a-box>
 
-        <a-sphere position = "0 0 0" color = "black" grabbable></a-sphere>
+        <a-box id="blue" color=#00AAFF position="1.5 0 -3" droppable>
 
-       
+        </a-box>
 
-            
-        </a-scene>
-    </body>
+        <a-sphere position="0 0 0" color="black" grabbable></a-sphere>
+
+        
+
+
+    </a-scene>
+</body>
+
 </html>
