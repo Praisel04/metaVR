@@ -12,7 +12,7 @@
       <!-- Cámara -->
       <a-entity position="0 1.6 0" camera look-controls></a-entity>
 
-      <!-- Controladores (con teletransporte y agarre de objetos) -->
+      <!-- Controladores con super-hands para agarrar objetos -->
       <a-entity id="rightHand" hand-controls="hand: right" super-hands="grabStart: #grab-start; grabEnd: #grab-end" 
                 laser-controls="hand: right" raycaster="objects: .grabbable; showLine: true; color: #ff0000;">
       </a-entity>
@@ -21,17 +21,18 @@
                 laser-controls="hand: left" raycaster="objects: .grabbable; showLine: true; color: #ff0000;">
       </a-entity>
 
-      <!-- Suelo (añadir collider para detectar la superficie de teletransporte) -->
+      <!-- Suelo (con collider para teletransporte) -->
       <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4" static-body></a-plane>
 
       <!-- Caja interactiva -->
       <a-box class="grabbable" position="0 1.5 -3" width="1" height="1" depth="1" color="#4CC3D9" dynamic-body grabbable></a-box>
 
-      <!-- Teletransporte (usando el joystick) -->
-      <a-entity teleport-controls="cameraRig: #cameraRig; trigger: #rightHand; laser: true; button: trigger; collider: true"></a-entity>
+      <!-- Teletransporte usando el joystick -->
+      <a-entity id="teleport-controls" teleport-controls="cameraRig: #cameraRig; joystick: true; button: trigger; laser: true; teleportMaxDistance: 10">
+      </a-entity>
 
-      <!-- Información adicional -->
-      <a-text value="Teletransporte con joystick, Agarre con gatillos." position="0 2 -3" scale="2 2 2"></a-text>
+      <!-- Texto informativo -->
+      <a-text value="Usa el joystick para teletransportarte. Usa el gatillo para agarrar." position="0 2 -3" scale="2 2 2"></a-text>
     </a-scene>
 
     <script>
