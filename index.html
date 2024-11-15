@@ -1,31 +1,49 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Interactuar con Láser y Desplazamiento</title>
-        <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-        <script src="https://unpkg.com/aframe-animation.component@^3.2.1/dist/aframe-animation-component.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-        <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
-    </head>
-    <body>
-        <a-scene>
-            <!-- Controladores con super-hands -->
-            <a-entity sphere-collider="objects: a-box;" super-hands id="rightHand" hand-controls="hand: right; handModeStyle: lowPoly; color: #ffcccc"></a-entity>
-            <a-entity sphere-collider="objects: a-box;" super-hands id="leftHand" hand-controls="hand: left; handModeStyle: lowPoly; color: #ffcccc"></a-entity>
+  <head>
+    <title>Teletransporte y Agarre de Objetos</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation.component@^3.2.1/dist/aframe-animation-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Cámara -->
+      <a-entity position="0 1.6 0" camera look-controls></a-entity>
 
-            <!-- Suelo -->
-            <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4" static-body></a-plane>
+      <!-- Controladores (con teletransporte y agarre de objetos) -->
+      <a-entity id="rightHand" hand-controls="hand: right" super-hands="grabStart: #grab-start; grabEnd: #grab-end" 
+                laser-controls="hand: right" raycaster="objects: .grabbable; showLine: true; color: #ff0000;">
+      </a-entity>
 
-            <!-- Caja interactiva -->
-            <a-box id="interactive-box" position="0 1.5 -2" width="1" height="1" depth="1" color="#4CC3D9" dynamic-body grabbable></a-box>
+      <a-entity id="leftHand" hand-controls="hand: left" super-hands="grabStart: #grab-start; grabEnd: #grab-end" 
+                laser-controls="hand: left" raycaster="objects: .grabbable; showLine: true; color: #ff0000;">
+      </a-entity>
 
-            <!-- Cámara -->
-            <a-entity position="0 1.6 0" camera look-controls></a-entity>
+      <!-- Suelo -->
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4" static-body></a-plane>
 
-            <!-- Controles de teletransporte -->
-            <a-entity teleport-controls="cameraRig: #camera; trigger: #rightHand; laser: true; button: trigger; collider: true"></a-entity>
-        </a-scene>
+      <!-- Caja interactiva -->
+      <a-box class="grabbable" position="0 1.5 -3" width="1" height="1" depth="1" color="#4CC3D9" dynamic-body grabbable></a-box>
 
-        
-    </body>
+      <!-- Teletransporte (usando el joystick) -->
+      <a-entity teleport-controls="cameraRig: #cameraRig; trigger: #rightHand; laser: true; button: trigger; collider: true"></a-entity>
+
+      <!-- Información adicional -->
+      <a-text value="Teletransporte con joystick, Agarre con gatillos." position="0 2 -3" scale="2 2 2"></a-text>
+    </a-scene>
+
+    <script>
+      // Verificación de interacciones
+      document.addEventListener('DOMContentLoaded', () => {
+        const box = document.querySelector('.grabbable');
+        if (box) {
+          box.addEventListener('hover-start', () => console.log('El láser detectó la caja.'));
+          box.addEventListener('grab-start', () => console.log('Caja agarrada.'));
+          box.addEventListener('grab-end', () => console.log('Caja soltada.'));
+        }
+      });
+    </script>
+  </body>
 </html>
