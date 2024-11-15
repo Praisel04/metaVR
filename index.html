@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Interactuar con Láser</title>
+        <title>Interactuar con Láser y Desplazamiento</title>
         <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
         <script src="https://unpkg.com/aframe-animation.component@^3.2.1/dist/aframe-animation-component.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
@@ -16,23 +16,14 @@
             <!-- Suelo -->
             <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4" static-body></a-plane>
 
-            <!-- Caja interactiva, acercada a la cámara -->
+            <!-- Caja interactiva -->
             <a-box id="interactive-box" position="0 1.5 -2" width="1" height="1" depth="1" color="#4CC3D9" dynamic-body grabbable></a-box>
 
-            <!-- Cámara -->
-            <a-entity position="0 1.6 0" camera></a-entity>
+            <!-- Cámara con movimiento basado en joystick -->
+            <a-entity id="camera" position="0 1.6 0" camera look-controls movement-controls="fly: true; speed: 2"></a-entity>
+
         </a-scene>
 
-        <script>
-            // Debugging para verificar interacciones
-            document.addEventListener('DOMContentLoaded', () => {
-                const box = document.querySelector('#interactive-box');
-                if (box) {
-                    box.addEventListener('hover-start', () => console.log('El láser detectó la caja.'));
-                    box.addEventListener('grab-start', () => console.log('Caja agarrada.'));
-                    box.addEventListener('grab-end', () => console.log('Caja soltada.'));
-                }
-            });
-        </script>
+        
     </body>
 </html>
