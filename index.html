@@ -1,47 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interactuar con Láser en A-Frame</title>
-    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-super-hands-component@4.0.0/dist/aframe-super-hands.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <!-- Controladores con Láser y super-hands -->
-      <a-entity 
-        laser-controls="hand: left" 
-        super-hands 
-        raycaster="objects: [grabbable]; far: 10; showLine: true">
-      </a-entity>
-      <a-entity 
-        laser-controls="hand: right" 
-        super-hands 
-        raycaster="objects: [grabbable]; far: 10; showLine: true">
-      </a-entity>
+<html>
+    <head>
+        <title>Interactuar con Láser</title>
+        <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+        <script src="https://unpkg.com/aframe-animation.component@^3.2.1/dist/aframe-animation-component.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+        <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
+    </head>
+    <body>
+        <a-scene>
+            <!-- Controladores con super-hands -->
+            <a-entity sphere-collider="objects: a-box;" super-hands id="rightHand" hand-controls="hand: right; handModeStyle: lowPoly; color: #ffcccc"></a-entity>
+            <a-entity sphere-collider="objects: a-box;" super-hands id="leftHand" hand-controls="hand: left; handModeStyle: lowPoly; color: #ffcccc"></a-entity>
 
-      <!-- Suelo -->
-      <a-plane 
-        position="0 0 -4" 
-        rotation="-90 0 0" 
-        width="10" 
-        height="10" 
-        color="#7BC8A4">
-      </a-plane>
+            <!-- Suelo -->
+            <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4" static-body></a-plane>
 
-      <!-- Caja interactiva -->
-      <a-box 
-        position="0 1.5 -3" 
-        width="1" 
-        height="1" 
-        depth="1" 
-        color="#4CC3D9" 
-        grabbable>
-      </a-box>
+            <!-- Caja interactiva, acercada a la cámara -->
+            <a-box id="interactive-box" position="0 1.5 -2" width="1" height="1" depth="1" color="#4CC3D9" dynamic-body grabbable></a-box>
 
-      <!-- Cámara -->
-      <a-entity position="0 1.6 0" camera></a-entity>
-    </a-scene>
-  </body>
+            <!-- Cámara -->
+            <a-entity position="0 1.6 0" camera></a-entity>
+        </a-scene>
+
+        <script>
+            // Debugging para verificar interacciones
+            document.addEventListener('DOMContentLoaded', () => {
+                const box = document.querySelector('#interactive-box');
+                if (box) {
+                    box.addEventListener('hover-start', () => console.log('El láser detectó la caja.'));
+                    box.addEventListener('grab-start', () => console.log('Caja agarrada.'));
+                    box.addEventListener('grab-end', () => console.log('Caja soltada.'));
+                }
+            });
+        </script>
+    </body>
 </html>
