@@ -1,11 +1,8 @@
 # metaVR
 
 ## EXPLICACION BASICA DEL PROGRAMA
-Este un proyecto que trata de realizar un pequeño videojuego para VR desarrollado en HTML con las librerias establecidad por Aframe.
+En este proyecto he desarrollado un pequeño jueog interactivo para VR con el motor unity 6.
 
-Para poder probar el proyecto, podras encontar a la derecha un enlace a vercel donde esta el proyecto subido para poder usarlo.
+El juego es una pequeña demo para porbar los distintos tipos de fuerzas que existen y como afectan a la vr.
 
-FUNCIONALIDADES USADAS AHORA MISMO:
-  Poder hacer click en una BOX para cambiar el color de otra.
-  Arrastrar un objeto
-  Drop De un objeto sobre otro
+El juego está publicado en Itch.io: https://praiselvr.itch.io/how-it-feels-to-be-god
